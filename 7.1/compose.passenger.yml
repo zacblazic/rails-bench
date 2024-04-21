@@ -1,0 +1,32 @@
+---
+name: rails-bench-70-passenger
+services:
+  rails:
+    build: .
+    image: rails-bench-70:0.0.1
+    init: true
+    platform: linux/arm64
+    command:
+      - bundle
+      - exec
+      - passenger
+      - start
+    ports:
+      - "3000:3000"
+      - "35457:35457"
+    environment:
+      PASSENGER_DISABLE_SECURITY_UPDATE_CHECK: true
+      PASSENGER_ENGINE: builtin
+      PASSENGER_MAX_POOL_SIZE: 1
+      PASSENGER_MIN_INSTANCES: 1
+      PASSENGER_PORT: 3000
+      PASSENGER_PRELOAD_BUNDLER: true
+      PASSENGER_SPAWN_METHOD: smart
+      RAILS_ENV: production
+      SECRET_KEY_BASE: secret
+    networks:
+      - default
+
+networks:
+  default:
+    name: rails-bench-70-passenger
