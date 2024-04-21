@@ -1,0 +1,31 @@
+---
+name: rails-bench-70-puma
+services:
+  rails:
+    build: .
+    image: rails-bench-70:0.0.1
+    init: true
+    platform: linux/arm64
+    command:
+      - bundle
+      - exec
+      - puma
+    ports:
+      - "3000:3000"
+    environment:
+      PUMA_BIND_ADDRESS: 0.0.0.0
+      PUMA_BIND_PORT: 3000
+      PUMA_DISABLE_QUEUE_REQUESTS: true
+      PUMA_ENABLED: true
+      PUMA_MODE: single
+      PUMA_THREADS_MAX: 1
+      PUMA_THREADS_MIN: 1
+      PUMA_WORKERS: 1
+      RAILS_ENV: production
+      SECRET_KEY_BASE: secret
+    networks:
+      - default
+
+networks:
+  default:
+    name: rails-bench-70-puma
